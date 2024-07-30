@@ -3,6 +3,7 @@ let mainProductsGrid = document.querySelector('.js-prodcuts-grid');
 
 let productsHTML = "";
 
+// generate the HTML code from the products objects
 products.forEach(product => {
   productsHTML += `
     <div class="product-container">
@@ -49,11 +50,40 @@ products.forEach(product => {
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary">
+      <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
         Add to Cart
       </button>
     </div>
   `
 });
 
+// put the data into the page 
 mainProductsGrid.innerHTML = productsHTML;
+
+// get the add to cart button
+let addToCartButtons = document.querySelectorAll('.js-add-to-cart');
+
+// add a product to cart
+addToCartButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    let productId = btn.dataset.productId;
+
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if(productId === item.productId)
+        matchingItem = item;
+    });
+
+    if(matchingItem) {
+      matchingItem.quntity++;
+    } else {
+      cart.push({
+        productId,
+        quntity: 1
+      });
+    }
+
+    console.log(cart)
+  });
+});
