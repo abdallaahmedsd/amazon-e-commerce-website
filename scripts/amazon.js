@@ -29,7 +29,7 @@ products.forEach(product => {
       </div>
 
       <div class="product-quantity-container">
-        <select>
+        <select class="js-quantity-selector-${product.id}">
           <option selected value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -45,7 +45,7 @@ products.forEach(product => {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart js-added-to-cart-${product.id}">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -66,28 +66,48 @@ let addToCartButtons = document.querySelectorAll('.js-add-to-cart');
 // add a product to cart
 addToCartButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
-    let productId = btn.dataset.productId;
+    let {productId} = btn.dataset;
 
     let matchingItem;
-
+    
     cart.forEach((item) => {
       if(productId === item.productId)
         matchingItem = item;
     });
 
+    let quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
+    let quantity = Number(quantitySelector.value);
+
     if(matchingItem) {
-      matchingItem.quantity++;
+      matchingItem.quantity += quantity;
     } else {
       cart.push({
         productId,
-        quantity: 1
+        quantity
       });
     }
 
+    // get the cart quantity
     let cartQuantity = 0;
-
     cart.forEach(item => cartQuantity += item.quantity);
-
     document.querySelector('.js-cart-quantity').textContent = cartQuantity;
+
+    // show and hide the added to cart toolTit
+    let addedToCartToolTip = document.querySelector(`.js-added-to-cart-${productId}`);
+    showHideAddedToCart(addedToCartToolTip);
+
   });
 });
+
+let setTimeoutId;
+function showHideAddedToCart(addedToCartToolTip) {
+
+  if(setTimeoutId)
+    clearTimeout(setTimeoutId);
+  
+  addedToCartToolTip.classList.add('show');
+
+  setTimeoutId = setTimeout(() => {
+    addedToCartToolTip.classList.remove('show');
+  }, 2000);
+}
