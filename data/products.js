@@ -1,3 +1,5 @@
+import {shuffleArray} from "../scripts/utilities.js";
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -678,3 +680,6 @@ export const products = [
     priceCents: 100
   }
 ];
+
+shuffleArray(products);
+
