@@ -1,4 +1,4 @@
-import {shuffleArray} from "../scripts/utilities.js";
+import {shuffleArray} from "../scripts/utils/shuffle.js";
 
 export const products = [
   {
