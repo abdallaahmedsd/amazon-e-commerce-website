@@ -18,7 +18,7 @@ function main() {
     btn.addEventListener('click', () => {
       let {productId} = btn.dataset;
 
-      cartModule.addProductToCart(productId);
+      cartModule.addToCart(productId);
 
       updateCartQuantity();
 

@@ -9,7 +9,7 @@ export const cart = [
   }
 ]
 
-export function addProductToCart(productId) {
+export function addToCart(productId) {
   let matchingItem;
     
   cart.forEach((cartItem) => {
@@ -27,5 +27,13 @@ export function addProductToCart(productId) {
       productId,
       quantity
     });
+  }
+}
+
+export function removeFromCart(productId) {
+  const index = cart.findIndex(item => item.productId === productId);
+
+  if (index !== -1) {
+    cart.splice(index, 1);
   }
 }

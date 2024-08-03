@@ -1,17 +1,17 @@
-import {cart} from '../data/cart.js';
-import {products} from '../data/products.js';
+import * as cartModule from '../data/cart.js';
+import { products } from '../data/products.js';
 import { formmatCurrency } from "./utils/money.js";
-
 
 main();
 
 function main() {
   generateAndShowCartItems();
+  removeFromCart();
 }
 
 function generateAndShowCartItems() {
   let cartSummaryHTML = '';
-  cart.forEach(item => {
+  cartModule.cart.forEach(item => {
     let {productId} = item;
 
     let product = getProductById(productId);
@@ -43,7 +43,7 @@ function generateAndShowCartItems() {
               <span class="update-quantity-link link-primary">
                 Update
               </span>
-              <span class="delete-quantity-link link-primary">
+              <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id=${product.id}>
                 Delete
               </span>
             </div>
@@ -97,9 +97,22 @@ function generateAndShowCartItems() {
       </div>
     `
     document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+
+    //
   });
 }
 
 function getProductById(productId) {
   return products.find(product => product.id === productId);
+}
+
+function removeFromCart() {
+  let deleteLinks = document.querySelectorAll('.js-delete-quantity-link');
+
+  deleteLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      let {productId} = e.target.dataset;
+      cartModule.removeFromCart(productId);
+    });
+  });
 }
