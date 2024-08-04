@@ -2,11 +2,7 @@ import { products } from "../data/products.js";
 import * as cartModule from "../data/cart.js";
 import { formmatCurrency } from "./utils/money.js";
 
-
-
 main();
-
-
 
 function main() {
   generateAndShowProducts();
