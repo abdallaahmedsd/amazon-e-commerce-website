@@ -6,6 +6,7 @@ main();
 
 function main() {
   generateAndShowProducts();
+  updateCartQuantity();
 
   // get the add to cart button
   let addToCartButtons = document.querySelectorAll('.js-add-to-cart');
@@ -87,21 +88,15 @@ function generateAndShowProducts() {
 }
 
 function updateCartQuantity() {
-  let cartQuantity = 0;
-  cartModule.cart.forEach(cartItem => cartQuantity += cartItem.quantity);
-  document.querySelector('.js-cart-quantity').textContent = cartQuantity;
+  document.querySelector('.js-cart-quantity').textContent = cartModule.getNumberOfCartItems();
 }
 
-let setTimeoutId;
 function showHideAddedToCart(productId) {
   let addedToCartToolTip = document.querySelector(`.js-added-to-cart-${productId}`);
 
-  if(setTimeoutId)
-    clearTimeout(setTimeoutId);
-  
   addedToCartToolTip.classList.add('show');
 
-  setTimeoutId = setTimeout(() => {
+  setTimeout(() => {
     addedToCartToolTip.classList.remove('show');
   }, 2000);
 }
