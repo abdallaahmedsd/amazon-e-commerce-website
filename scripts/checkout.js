@@ -13,6 +13,7 @@ function main() {
   updateOrderItem();
   saveOrderItem();
   calcOrderItemsQuantity();
+  updateDeliveryOption();
 }
 
 function generateAndShowCartItems() {
@@ -68,7 +69,7 @@ function generateAndShowCartItems() {
             <div class="delivery-options-title">
               Choose a delivery option:
             </div>
-            ${deliveryOptionsHTML(product.id, cartItem)}
+            ${generateDeliveryOptionsHTML(cartItem)}
           </div>
         </div>
       </div>
@@ -137,7 +138,7 @@ function calcOrderItemsQuantity() {
   document.querySelector('.js-order-summary-quantity').textContent = `${cartModule.getNumberOfCartItems()} items`;
 }
 
-function deliveryOptionsHTML(productId, cartItem) {
+function generateDeliveryOptionsHTML(cartItem) {
   let html = '';
 
   deliveryOptions.forEach(deliveryOption => {
@@ -151,10 +152,12 @@ function deliveryOptionsHTML(productId, cartItem) {
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
     html += `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option"
+        data-product-id="${cartItem.productId}"
+        data-delivery-option-id="${deliveryOption.id}">
         <input ${isChecked ? 'checked' : ''} type="radio"
           class="delivery-option-input"
-          name="delivery-option-${productId}">
+          name="delivery-option-${cartItem.productId}">
         <div>
           <div class="delivery-option-date">
             ${dateString}
@@ -175,4 +178,15 @@ function calcFormatDate(daysToAdd) {
   const deliveryDate = today.add(daysToAdd, 'days');
   const dateString = deliveryDate.format('dddd, MMMM D');
   return dateString;
+}
+
+function updateDeliveryOption() {
+  const options = document.querySelectorAll('.js-delivery-option');
+
+  options.forEach(Option => {
+    Option.addEventListener('click', (e) => {
+      const {productId, deliveryOptionId} = Option.dataset;
+      cartModule.updateDeliveryOption(productId, deliveryOptionId);
+    });
+  });
 }
