@@ -681,5 +681,9 @@ export const products = [
   }
 ];
 
+export function getProductById(productId) {
+  return products.find(product => product.id === productId);
+}
+
 shuffleArray(products);
 

@@ -1,4 +1,4 @@
-export function formmatCurrency(priceCents) {
+export function formatCurrency(priceCents) {
   if(priceCents === 0)
     return (0).toFixed(2);
   
