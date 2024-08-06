@@ -187,6 +187,11 @@ function updateDeliveryOption() {
     Option.addEventListener('click', (e) => {
       const {productId, deliveryOptionId} = Option.dataset;
       cartModule.updateDeliveryOption(productId, deliveryOptionId);
+      renderOrderSummary();
     });
   });
+}
+
+function renderOrderSummary() {
+  main();
 }
