@@ -1,6 +1,6 @@
 import { products } from "../data/products.js";
 import * as cartModule from "../data/cart.js";
-import { formmatCurrency } from "./utils/money.js";
+import { formatCurrency } from "./utils/money.js";
 
 main();
 
@@ -51,7 +51,7 @@ function generateAndShowProducts() {
         </div>
 
         <div class="product-price">
-          $${formmatCurrency(product.priceCents)}
+          $${formatCurrency(product.priceCents)}
         </div>
 
         <div class="product-quantity-container">
