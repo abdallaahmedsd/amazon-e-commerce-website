@@ -1,5 +1,3 @@
-import { deliveryOptions } from "./deliveryOptions.js";
-
 export let cart = JSON.parse(localStorage.getItem('cart'));
 
 if(!cart) {

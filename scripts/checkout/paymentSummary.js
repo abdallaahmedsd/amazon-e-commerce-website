@@ -47,15 +47,14 @@ function getPaymentDetails() {
   return paymentDetails;
 }
 
-function generatePaymentSummaryHTML(paymentDetails) {
-
+function generatePaymentSummaryHTML(paymentDetails){
   let paymentSummaryHTML = `
     <div class="payment-summary-title">
       Order Summary
     </div>
 
     <div class="payment-summary-row">
-      <div>Items (${cartModule.cart.length}):</div>
+      <div>Items (${cartModule.getNumberOfCartItems()}):</div>
       <div class="payment-summary-money">$${paymentDetails.itemsPrice}</div>
     </div>
 

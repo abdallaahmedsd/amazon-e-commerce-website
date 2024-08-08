@@ -1,9 +1,9 @@
 import * as cartModule from '../../data/cart.js';
 import { getProductById } from '../../data/products.js';
 import { formatCurrency } from "../utils/money.js";
-import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions, getDeliveryOptionById } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOptionById, calculateDeliveryDate } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 
 function main() {
@@ -11,7 +11,6 @@ function main() {
   removeFromCart();
   updateOrderItem();
   saveUpdatedOrderItem();
-  calcOrderItemsQuantity();
   updateDeliveryOption();
 }
 
@@ -37,7 +36,7 @@ function generateAndShowCartItems() {
     cartSummaryHTML += `
       <div class="cart-item-container js-cart-item-container-${product.id}">
         <div class="delivery-date">
-          Delivery date: ${calcFormatDate(deliveryOption.deliveryDays)}
+          Delivery date: ${calculateDeliveryDate(deliveryOption)}
         </div>
   
         <div class="cart-item-details-grid">
@@ -77,9 +76,9 @@ function generateAndShowCartItems() {
         </div>
       </div>
     `
-    document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
-
   });
+
+  document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 }
 
 function removeFromCart() {
@@ -90,11 +89,9 @@ function removeFromCart() {
       let {productId} = e.target.dataset;
 
       if(cartModule.removeFromCart(productId)) {
-        let container = document.querySelector(`.js-cart-item-container-${productId}`);
-
-        container.remove();
-        calcOrderItemsQuantity();
+        renderCheckoutHeader();
         renderPaymentSummary();
+        renderOrderSummary();
       }
 
     });
@@ -139,16 +136,12 @@ function saveUpdatedOrderItem() {
   });
 }
 
-function calcOrderItemsQuantity() {
-  document.querySelector('.js-order-summary-quantity').textContent = `${cartModule.getNumberOfCartItems()} items`;
-}
-
 function generateDeliveryOptionsHTML(cartItem) {
   let html = '';
 
   deliveryOptions.forEach(deliveryOption => {
 
-    const dateString = calcFormatDate(deliveryOption.deliveryDays);
+    const dateString = calculateDeliveryDate(deliveryOption);
 
     const priceString = deliveryOption.priceCents === 0
                           ? 'FREE'
@@ -176,13 +169,6 @@ function generateDeliveryOptionsHTML(cartItem) {
   });
 
   return html;
-}
-
-function calcFormatDate(daysToAdd) {
-  const today = dayjs();
-  const deliveryDate = today.add(daysToAdd, 'days');
-  const dateString = deliveryDate.format('dddd, MMMM D');
-  return dateString;
 }
 
 function updateDeliveryOption() {
