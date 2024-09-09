@@ -1,11 +1,15 @@
-import { products } from "../data/products.js";
+import { products, loadProducts } from "../data/products.js";
 import * as cartModule from "../data/cart.js";
 import { formatCurrency } from "./utils/money.js";
 
 main();
 
 function main() {
-  generateAndShowProducts();
+
+  loadProducts(generateAndShowProducts);
+
+  //generateAndShowProducts();
+
   updateCartQuantity();
 
   // get the add to cart button
