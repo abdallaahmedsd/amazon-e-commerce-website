@@ -80,7 +80,9 @@ export function loadProductsFetch() {
       }
       return new Product(productDetails);
     });
-  });
+  });/*.catch((error) => {
+    console.log('Unexpected error: Please try again later')
+  });*/
 
   return promise;
 }
@@ -103,10 +105,16 @@ export function loadProducts(fun) {
     fun();
   });
 
-  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.addEventListener('error', (error) => {
+    console.log('Unexpected error: Please try again later.')
+  });
+
+  xhr.open('GET', 'https://error.supersimplebackend.dev/products');
   xhr.send();
 }
+loadProducts();
 */
+
 
 /*
 export const products = [
