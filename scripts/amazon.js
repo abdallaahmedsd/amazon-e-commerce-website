@@ -1,14 +1,12 @@
-import { products, loadProducts } from "../data/products.js";
+import { products, loadProductsFetch } from "../data/products.js";
 import * as cartModule from "../data/cart.js";
-import { formatCurrency } from "./utils/money.js";
 
 main();
 
-function main() {
+async function main() {
+  await loadProductsFetch();
 
-  loadProducts(generateAndShowProducts);
-
-  //generateAndShowProducts();
+  generateAndShowProducts();
 
   updateCartQuantity();
 
