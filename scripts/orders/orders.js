@@ -2,6 +2,7 @@ import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { orders } from "../../data/orders.js";
 import { formatCurrency } from '../utils/money.js';
 import { getProductById } from '../../data/products.js';
+import { getNumberOfCartItems } from '../../data/cart.js'
 
 function renderOrderSummary() {
 
@@ -18,6 +19,8 @@ function renderOrderSummary() {
   });
 
   document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
+
+  getCartQuantity();
 }
 
 function generateOrderHeaderHTML(order) {
@@ -71,7 +74,7 @@ function generateOrderDetailsHTML(order) {
       </div>
 
       <div class="product-actions">
-        <a href="tracking.html">
+        <a href="tracking.html?orderId=${order.id}&productId=${orderItem.productId}">
           <button class="track-package-button button-secondary">
             Track package
           </button>
@@ -88,6 +91,10 @@ function formatDate(date) {
   const dateString = getDate.format('dddd D');
 
   return dateString;
+}
+
+function getCartQuantity() {
+  document.querySelector('.js-cart-quantity').innerHTML = getNumberOfCartItems();
 }
 
 renderOrderSummary();
