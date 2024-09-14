@@ -4,6 +4,13 @@ import { formatCurrency } from '../utils/money.js';
 import { getProductById } from '../../data/products.js';
 import { getNumberOfCartItems } from '../../data/cart.js'
 
+main();
+
+function main() {
+  renderOrderSummary();
+  getCartQuantity();
+}
+
 function renderOrderSummary() {
 
   let ordersHTML = ''
@@ -19,8 +26,6 @@ function renderOrderSummary() {
   });
 
   document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
-
-  getCartQuantity();
 }
 
 function generateOrderHeaderHTML(order) {
@@ -96,5 +101,3 @@ function formatDate(date) {
 function getCartQuantity() {
   document.querySelector('.js-cart-quantity').innerHTML = getNumberOfCartItems();
 }
-
-renderOrderSummary();

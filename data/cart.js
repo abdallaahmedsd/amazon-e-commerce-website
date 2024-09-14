@@ -78,6 +78,11 @@ function saveToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+export function clearCart() {
+  cart = [];
+  saveToStorage();
+}
+
 export function getCartItemById(productId) {
   return cart.find(product => product.productId === productId);
 }
