@@ -16,3 +16,7 @@ This is an e-commerce website project inspired by Amazon, developed using HTML, 
 - **CSS** for styling and responsive design
 - **JavaScript** for interactivity and API integration
 - **External APIs** for product data, order processing, and order tracking
+
+## Live Website
+
+You can view the live website at: [Amazon E-Commerce Website](https://abdallaahmedsd.github.io/amazon-e-commerce-website/amazon.html)
