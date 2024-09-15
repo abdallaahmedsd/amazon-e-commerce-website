@@ -105,8 +105,7 @@ function placeOrder() {
         const order = await response.json();
         addOrder(order);
 
-        // clearCart();
-        // renderPaymentSummary();
+        cartModule.clearCart();
       } catch (error) {
         console.log('Unexpected error: Please try again later.');
       }
